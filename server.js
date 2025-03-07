@@ -15,6 +15,15 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
+const path = require('path');
+
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Servir sw.js
+app.use('/sw.js', express.static(path.join(__dirname, 'public', 'sw.js')));
+
+
 // Configuración de Web Push
 webpush.setVapidDetails(
   'mailto:juan.servin.21s@utzmg.edu.mx',
