@@ -34,4 +34,6 @@ app.use('/auth', authRoutes);
 app.use('/auth', subscriptionRoutes); // 🔹 Agregando rutas de suscripción
 
 // Iniciar servidor
-app.listen(PORT, () => console.log(`🚀 Servidor en http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor en el puerto ${PORT}`);
+});
