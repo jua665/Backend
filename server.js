@@ -6,8 +6,6 @@ const authRoutes = require('./routes/authRoutes');
 const subscriptionRoutes = require('./routes/subscriptionRoutes'); // 🔹 Importar rutas de suscripción
 const webpush = require('web-push');
 
-
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
