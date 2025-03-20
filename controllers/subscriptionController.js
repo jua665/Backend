@@ -4,7 +4,7 @@ const Suscription = require('../models/suscription');
 const saveSubscription = async (req, res) => {
     try {
         const { subscription, userId, username } = req.body;
-        console.log('📥 Datos recibidos en el backend:', { subscription, userId, username });
+        console.log('📥 Datos recibidos en el backend:', req.body);
 
         // Validar si los datos son null o undefined
         if (!subscription || !userId || !username) {
