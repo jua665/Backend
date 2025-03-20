@@ -7,7 +7,7 @@ const saveSubscription = async (req, res) => {
         console.log('📥 Datos recibidos en el backend:', { subscription, userId });
 
         // Validar si los datos son null o undefined
-        if (!subscription || !userId ) {
+        if (!subscription || !userId) {
             console.warn('❌ Datos faltantes:', { subscription, userId });
             return res.status(400).json({ message: '❌ Faltan datos requeridos' });
         }
@@ -21,7 +21,7 @@ const saveSubscription = async (req, res) => {
             endpoint: subscription.endpoint,
             expirationTime: subscription.expirationTime,
             keys: subscription.keys,
-            userId: userId,
+            userId: userId
         });
 
         await newSubscription.save();
@@ -32,6 +32,5 @@ const saveSubscription = async (req, res) => {
         res.status(500).json({ message: '❌ Error al guardar la suscripción', error: error.message });
     }
 };
-
 
 module.exports = { saveSubscription };

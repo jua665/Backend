@@ -44,13 +44,3 @@ app.use('/auth', subscriptionRoutes); // 🔹 Agregando rutas de suscripción
 app.listen(PORT, () => {
   console.log(`🚀 Servidor en el puerto ${PORT}`);
 });
-
-const webpush = require("web-push");
-require("dotenv").config(); // Cargar las claves desde .env
-
-webpush.setVapidDetails(
-    "yo@yo",
-    process.env.VAPID_PUBLIC_KEY,
-    process.env.VAPID_PRIVATE_KEY
-);
-
