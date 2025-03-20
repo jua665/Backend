@@ -22,12 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/sw.js', express.static(path.join(__dirname, 'public', 'sw.js')));
 
 
-// Configuración de Web Push
-webpush.setVapidDetails(
-  'mailto:juan.servin.21s@utzmg.edu.mx',
-  process.env.VAPID_PUBLIC_KEY,
-  process.env.VAPID_PRIVATE_KEY
-);
+
 
 // Conectar a MongoDB
 mongoose.connect(process.env.MONGO_URI, {

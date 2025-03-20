@@ -1,12 +1,25 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const SubscriptionSchema = new mongoose.Schema({
-    endpoint: { type: String, required: true, unique: true },
-    keys: {
-        p256dh: { type: String, required: true },
-        auth: { type: String, required: true }
+  suscripcion: {
+    endpoint: {
+      type: String,
+      required: true // Asegura que siempre haya un endpoint válido
     },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+    expireTime: {
+      type: Date  
+    },
+    keys: {
+      p256dh: {
+        type: String,
+        required: true  
+      },
+      auth: {
+        type: String,
+        required: true
+      }
+    }
+  }
 });
 
-module.exports = mongoose.model("Suscription", SubscriptionSchema);
+module.exports = mongoose.model('Subscription', SubscriptionSchema , 'suscripciones');
