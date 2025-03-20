@@ -6,8 +6,7 @@ const SubscriptionSchema = new mongoose.Schema({
         p256dh: { type: String, required: true },
         auth: { type: String, required: true }
     },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    username: { type: String, required: true, ref:"User" }
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });
 
 module.exports = mongoose.model("Suscription", SubscriptionSchema);
