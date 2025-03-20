@@ -1,20 +1,18 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { sendPush,sends } = require('../sendPush.js');  // Usar require en lugar de import
-const suscription = require('../models/suscription.js')
-const webpush = require('web-push');
+const { sendPush, sends } = require('../sendPush.js');
+const suscription = require('../models/suscription.js');
 const User = require('../models/User');
-
 
 const router = express.Router();
 
 // Registrar usuario
 router.post('/register', async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const { nombre, email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Correo y contraseña son requeridos' });
+  try {
+    if (!nombre || !email || !password) {
+      return res.status(400).json({ message: 'Nombre, correo y contraseña son requeridos' });
     }
 
     // Verificar si el usuario ya existe
@@ -23,8 +21,9 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'El correo ya está registrado' });
     }
 
+    // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ email, password: hashedPassword });
+    const user = new User({ nombre, email, password: hashedPassword });
     await user.save();
 
     res.status(201).json({ message: 'Usuario registrado exitosamente' });
@@ -33,11 +32,12 @@ router.post('/register', async (req, res) => {
   }
 });
 
+
 // Iniciar sesión
 router.post('/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
+  try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Usuario no encontrado' });
 
@@ -50,26 +50,25 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Ruta para obtener la lista de usuarios
+// Obtener lista de usuarios
 router.get('/users', async (req, res) => {
   try {
-    const userList = await User.find({}, 'id email suscripcion'); // Obtener solo id, email y suscripción
+    const userList = await User.find({}, 'id email suscripcion');
     res.status(200).json(userList);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener los usuarios', error: error.message });
   }
 });
 
-// Ruta para actualizar la suscripción del usuario
+// Actualizar la suscripción del usuario
 router.post('/suscripcion', async (req, res) => {
   const { userId, suscripcion } = req.body;
 
   try {
-    // Buscar y actualizar el usuario
     const user = await User.findByIdAndUpdate(
-      userId, // Buscar por ID
-      { suscripcion }, // Actualizar el campo suscripción
-      { new: true } // Devolver el documento actualizado
+      userId, 
+      { suscripcion },
+      { new: true }
     );
 
     if (!user) {
@@ -77,7 +76,7 @@ router.post('/suscripcion', async (req, res) => {
     }
 
     // Enviar notificación de prueba
-    await sendPush(suscripcion, user.email); // Cambiado `user.nombre` por `user.email`
+    await sendPush(suscripcion, user.email);
 
     res.status(200).json({ message: 'Suscripción actualizada en el usuario', user });
   } catch (error) {
@@ -85,12 +84,11 @@ router.post('/suscripcion', async (req, res) => {
   }
 });
 
-// Ruta para enviar notificación con la suscripción del usuario
+// Enviar notificación con la suscripción del usuario
 router.post('/suscripcionMod', async (req, res) => {
   const { suscripcion, mensaje } = req.body;
 
   try {
-    // Enviar notificación de prueba
     await sends(suscripcion, mensaje);
 
     res.status(200).json({ message: 'Mensaje enviado' });

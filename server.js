@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch(err => console.error('❌ Error de conexión:', err));
 
 // Rutas
-app.use('/auth', authRoutes);
+app.use('/auth', authRoutes); 
 
 // Iniciar servidor
 app.listen(PORT, () => {
