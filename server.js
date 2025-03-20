@@ -1,27 +1,17 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
-const subscriptionRoutes = require('./routes/subscriptionRoutes'); // 🔹 Importar rutas de suscripción
-const webpush = require('web-push');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+dotenv.config();
+
 // Middleware
-app.use(express.json());
-app.use(cors());
-
-const path = require('path');
-
-// Servir archivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Servir sw.js
-app.use('/sw.js', express.static(path.join(__dirname, 'public', 'sw.js')));
-
-
+app.use(express.json());  // Para manejar peticiones JSON
+app.use(cors());          // Permitir solicitudes desde diferentes orígenes
 
 
 // Conectar a MongoDB
@@ -33,7 +23,6 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Rutas
 app.use('/auth', authRoutes);
-app.use('/auth', subscriptionRoutes); // 🔹 Agregando rutas de suscripción
 
 // Iniciar servidor
 app.listen(PORT, () => {

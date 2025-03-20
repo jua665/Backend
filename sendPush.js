@@ -1,5 +1,7 @@
-require("dotenv").config();
 const webpush = require("web-push");
+const { readFileSync } = require("fs");
+const path = require("path");
+const { error } = require("console");   
 
 // Configuración de Web Push con variables de entorno
 const keysPath = path.resolve("keys.json");
