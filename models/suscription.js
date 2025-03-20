@@ -7,7 +7,7 @@ const SubscriptionSchema = new mongoose.Schema({
         auth: { type: String, required: true }
     },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    username: { type: String, required: true }
+    username: { type: String, required: true, ref:"User" }
 });
 
 module.exports = mongoose.model("Suscription", SubscriptionSchema);
