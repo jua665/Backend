@@ -1,10 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const express = require('express');
 const { sendPush,sends } = require('./SendPush.js');  // Usar require en lugar de import
 const suscription = require('../models/suscription.js')
 const webpush = require('web-push');
-const express = require('express');
 const User = require('../models/User');
 
 
