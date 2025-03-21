@@ -62,6 +62,7 @@ router.get('/users', async (req, res) => {
 
 // Actualizar la suscripción del usuario
 router.post('/suscripcion', async (req, res) => {
+  console.log('Solicitud para /suscripcion recibida');
   const { userId, suscripcion } = req.body;
 
   try {
