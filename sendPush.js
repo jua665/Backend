@@ -35,12 +35,12 @@ function sendPush(subscription, userEmail) {
 async function sends(sub, mensaje) {
   try {
     await webpush.sendNotification(sub, mensaje);
-    return { mensaje: "ok" };
+    return { mensaje: "ok" }; // Retorna un objeto, pero no usa `res.json()`
   } catch (error) {
-    if (error.statusCode === 410 && error.body && error.body.includes('expired')) {
-      console.log('Suscripción expirada:', error.message);
+    if (error.body.includes('expired') && error.statusCode == 410) {
+      console.log('Sub expirada:',error);
     }
-    return { mensaje: "error", error: error.message };
+    return { mensaje: "error", error: error.message }; // Retorna error sin usar `res.json()`
   }
 }
 
